@@ -2,7 +2,13 @@
 
 ## Overview
 
-Fluentd output plugin to aggregate errors/exception to sentry which are a realtime event logging and aggregation platform.
+Fluentd output plugin to send aggregated errors/exception events to Sentry which are a realtime event logging and aggregation platform.<br>
+
+If you have sent events to Sentry directory from front webpage without aggregation, you may got down response time and performance problem (e.g. PHP).<br>
+To use Sentry and Fluentd together, it will got best perfomance because Fluentd acts messege queue for Sentry.
+
+* [Sentry Official web](https://getsentry.com/welcome/)
+* [Sentry Documents](http://sentry.readthedocs.org/en/latest/) [Screenshots](https://github.com/getsentry/sentry#screenshots)
 
 ## Installation
 
@@ -16,15 +22,53 @@ gem install fluent-plugin-sentry
 /usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-sentry
 `````
 
-## Tutorial
+## Preparation
+
+create sentry dashboard first. It could start with cost free!!
+
+* Create an account at https://getsentry.com/pricing/
+
+OR
+
+* Launch Sentry at the self manager server with https://github.com/getsentry/sentry
+
+## Usage
+
+```xml
+<source>
+ type forward
+</source>
+
+<match notify.**>
+  type sentry
+
+  # Set endpoint API URL
+  endpoint_url       https://${api_key}:${api_password}@app.getsentry.com/${project_id}
+
+  # Set default events value of 'server_name'
+  hostname_command   hostname -s
+
+  # rewrite shown tag name for Sentry dashboard
+  remove_tag_prefix  notify.
+</match>
+```
 
 ## Parameters
 
-* endpoint_url #required
-* default_level
-* defalut_logger
-* hostname_command
-* flush_interval
+* endpoint_url (Required)<br>
+Set endpoint API URL which shows at Sentry dashboard. (it is not sentry account information)
+
+* default_level<br>
+[default] error
+
+* defalut_logger<br>
+[default] flunetd
+
+* hostname_command<br>
+Set default frontend value of 'server_name'
+
+* flush_interval<br>
+[default] 0sec
 
 It also support rewriting Tag with SetTagKeyMixin.
 
