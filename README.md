@@ -4,8 +4,8 @@
 
 Fluentd output plugin to send aggregated errors/exception events to Sentry which are a realtime event logging and aggregation platform.<br>
 
-If you have sent events to Sentry directory from front webpage without aggregation, you may got down response time and performance problem (e.g. PHP).<br>
-To use Sentry and Fluentd together, it will got best perfomance because Fluentd acts messege queue for Sentry.
+If you have sent events to Sentry directory from front webpage without aggregation, you may got down response time and performance problem especially in PHP.<br>
+To use Sentry and Fluentd together, it will got best performance because Fluentd acts messege queue for Sentry.
 
 * [Sentry Official web](https://getsentry.com/welcome/)
 * [Sentry Documents](http://sentry.readthedocs.org/en/latest/) [Screenshots](https://github.com/getsentry/sentry#screenshots)
@@ -43,9 +43,10 @@ OR
   type sentry
 
   # Set endpoint API URL
-  endpoint_url       https://${api_key}:${api_password}@app.getsentry.com/${project_id}
+  endpoint_url       https://API_KEY:API_PASSWORD@app.getsentry.com/PROJECT_ID
 
   # Set default events value of 'server_name'
+  # To set short hostname, set like below.
   hostname_command   hostname -s
 
   # rewrite shown tag name for Sentry dashboard
@@ -65,6 +66,7 @@ Set endpoint API URL which shows at Sentry dashboard. (it is not sentry account 
 [default] flunetd
 
 * hostname_command<br>
+[default] hostname
 Set default frontend value of 'server_name'
 
 * flush_interval<br>
