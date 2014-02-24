@@ -12,15 +12,15 @@ To use Sentry and Fluentd together, it will got best perfomance because Fluentd 
 
 ## Installation
 
-install with gem or fluent-gem command as:
+install with `gem` or `fluent-gem` command as:
 
-`````
-### native gem
-gem install fluent-plugin-sentry
+```bash
+# for fluentd
+$ gem install fluent-plugin-sentry
 
-### td-agent gem
-/usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-sentry
-`````
+# for td-agent
+$ sudo /usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-sentry
+```
 
 ## Preparation
 
