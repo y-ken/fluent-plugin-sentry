@@ -20,5 +20,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "webmock"
   spec.add_runtime_dependency "fluentd"
-  spec.add_runtime_dependency "sentry-raven"
+  spec.add_runtime_dependency "sentry-raven", ">= 0.8.0"
 end

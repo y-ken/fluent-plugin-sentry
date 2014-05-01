@@ -60,7 +60,7 @@ class SentryOutputTest < Test::Unit::TestCase
     assert_equal '12345', @body['project']
     assert_equal 'fluentd', @body['logger']
     assert_equal 'ruby', @body['platform']
-    assert_equal 'app1_error', @body['tags'][':tag']
+    assert_equal 'app1_error', @body['tags']['tag']
     hostname = `#{d1.instance.config['hostname_command']}`.chomp
     assert_equal hostname, @body['server_name']
     extra_message = {'something' => emit_extra}
