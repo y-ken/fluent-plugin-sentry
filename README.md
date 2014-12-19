@@ -10,6 +10,10 @@ To use Sentry and Fluentd together, it will got best performance because Fluentd
 * [Sentry Official web](https://getsentry.com/welcome/)
 * [Sentry Documents](http://sentry.readthedocs.org/en/latest/) [Screenshots](https://github.com/getsentry/sentry#screenshots)
 
+> ![http://blog.getsentry.com/images/hero.png](https://cloud.githubusercontent.com/assets/1734549/5498750/2b471a6c-8767-11e4-8634-961c99e635ed.png)
+(quoted from http://blog.getsentry.com/)
+
+
 ## Installation
 
 install with `gem` or `fluent-gem` command as:
