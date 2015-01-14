@@ -52,7 +52,7 @@ class SentryOutputTest < Test::Unit::TestCase
     p @body
     emits = d1.emits
     assert_equal 0, emits.length
-    assert_equal 'application/json', @content_type
+    assert_equal 'application/octet-stream', @content_type
     assert_equal emit_message, @body['message']
     timestamp = Time.now.utc.strftime('%Y-%m-%dT%H:%M:%S')
     assert_equal timestamp, @body['timestamp']
