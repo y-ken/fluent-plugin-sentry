@@ -24,7 +24,8 @@ class SentryOutputTest < Test::Unit::TestCase
     parser = Yajl::Parser.new
     stub_request(:post, url).with do |req|
       @content_type = req.headers["Content-Type"]
-      @body = parser.parse(req.body)
+      message = Zlib::Inflate.inflate(Base64.decode64(req.body))
+      @body = parser.parse(message)
     end
   end
 
@@ -57,7 +58,6 @@ class SentryOutputTest < Test::Unit::TestCase
     timestamp = Time.now.utc.strftime('%Y-%m-%dT%H:%M:%S')
     assert_equal timestamp, @body['timestamp']
     assert_equal emit_level, @body['level']
-    assert_equal '12345', @body['project']
     assert_equal 'fluentd', @body['logger']
     assert_equal 'ruby', @body['platform']
     assert_equal 'app1_error', @body['tags']['tag']
