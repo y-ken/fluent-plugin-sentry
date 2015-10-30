@@ -4,7 +4,7 @@ class Fluent::SentryOutput < Fluent::BufferedOutput
   include Fluent::HandleTagNameMixin
 
   LOG_LEVEL = %w(fatal error warning info debug)
-  EVENT_KEYS = %w(message timestamp time_spent level logger culprit server_name release tags checksum fingerprint)
+  EVENT_KEYS = %w(message timestamp time_spent level logger culprit server_name release tags)
   DEFAULT_HOSTNAME_COMMAND = 'hostname'
 
   config_param :default_level, :string, :default => 'error'
@@ -75,9 +75,7 @@ class Fluent::SentryOutput < Fluent::BufferedOutput
     event.culprit = record['culprit'] || nil
     event.server_name = record['server_name'] || @hostname
     event.release = record['release'] if record['release']
-    event.tags = event.tags.merge(record['tags'] || { :tag => tag })
-    event.checksum = record['checksum'] || nil
-    event.fingerprint = record['fingerprint'] || nil
+    event.tags = event.tags.merge({ :tag => tag }.merge(record['tags'] || {}))
     event.extra = record.reject{ |key| EVENT_KEYS.include?(key) }
     @client.send_event(event)
   end
