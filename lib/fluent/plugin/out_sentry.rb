@@ -4,7 +4,7 @@ class Fluent::SentryOutput < Fluent::BufferedOutput
   include Fluent::HandleTagNameMixin
 
   LOG_LEVEL = %w(fatal error warning info debug)
-  EVENT_KEYS = %w(logger level tags modules message)
+  EVENT_KEYS = %w(message timestamp time_spent level logger culprit server_name release tags checksum fingerprint)
   DEFAULT_HOSTNAME_COMMAND = 'hostname'
 
   config_param :default_level, :string, :default => 'error'
@@ -68,14 +68,17 @@ class Fluent::SentryOutput < Fluent::BufferedOutput
       :context => Raven::Context.new, 
       :message => record['message']
     )
-    event.timestamp = Time.at(time).utc.strftime('%Y-%m-%dT%H:%M:%S')
-    event.logger = record['logger'] || @default_logger
+    event.timestamp = record['timestamp'] || Time.at(time).utc.strftime('%Y-%m-%dT%H:%M:%S')
+    event.time_spent = record['time_spent'] || nil
     event.level = record['level'] || @default_level
-    event.tags = record['tags'] || { :tag => tag }
-    event.extra = record.reject{ |key| EVENT_KEYS.include?(key) }
-    event.modules = record['modules'] || nil
-    event.platform = record['platform'] if record['platform']
+    event.logger = record['logger'] || @default_logger
+    event.culprit = record['culprit'] || nil
     event.server_name = record['server_name'] if record['server_name']
-    @client.send(event)
+    event.release = record['release'] if record['release']
+    event.tags = event.tags.merge(record['tags'] || { :tag => tag })
+    event.checksum = record['checksum'] || nil
+    event.fingerprint = record['fingerprint'] || nil
+    event.extra = record.reject{ |key| EVENT_KEYS.include?(key) }
+    @client.send_event(event)
   end
 end
