@@ -2,10 +2,11 @@
 
 ## Overview
 
-Fluentd output plugin to send aggregated errors/exception events to Sentry which are a realtime event logging and aggregation platform.<br>
+fluent-plugin-sentry is a fluentd output plugin that sends aggregated errors/exception events to Sentry. Sentry is a event logging and aggregation platform.<br>
 
-If you have sent events to Sentry directory from front webpage without aggregation, you may got down response time and performance problem especially in PHP.<br>
-To use Sentry and Fluentd together, it will got best performance because Fluentd acts messege queue for Sentry.
+Sentry alone does not buffer incoming requests, so if your Sentry instance is under load, Sentry can respond with a 503 Service Unavailable.<br>
+
+fluent-plugin-sentry extends fluent buffered output and enables a fluend user to buffer and flush messages to Sentry with reliable delivery.
 
 * [Sentry Official web](https://getsentry.com/welcome/)
 * [Sentry Documents](http://sentry.readthedocs.org/en/latest/) [Screenshots](https://github.com/getsentry/sentry#screenshots)
