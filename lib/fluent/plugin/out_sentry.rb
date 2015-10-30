@@ -32,11 +32,11 @@ class Fluent::SentryOutput < Fluent::BufferedOutput
     end
 
     hostname_command = @hostname_command || DEFAULT_HOSTNAME_COMMAND
-    hostname = `#{hostname_command}`.chomp
+    @hostname = `#{hostname_command}`.chomp
 
     @configuration = Raven::Configuration.new
     @configuration.server = @endpoint_url
-    @configuration.server_name = hostname
+    @configuration.server_name = @hostname
     @client = Raven::Client.new(@configuration)
   end
 
@@ -73,7 +73,7 @@ class Fluent::SentryOutput < Fluent::BufferedOutput
     event.level = record['level'] || @default_level
     event.logger = record['logger'] || @default_logger
     event.culprit = record['culprit'] || nil
-    event.server_name = record['server_name'] if record['server_name']
+    event.server_name = record['server_name'] || @hostname
     event.release = record['release'] if record['release']
     event.tags = event.tags.merge(record['tags'] || { :tag => tag })
     event.checksum = record['checksum'] || nil
