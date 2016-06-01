@@ -23,6 +23,9 @@ install with `gem` or `fluent-gem` command as:
 # for fluentd
 $ gem install fluent-plugin-sentry
 
+# for ruby v1.9.x
+$ gem install fluent-plugin-sentry --version '0.0.3'
+
 # for td-agent
 $ sudo /usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-sentry
 ```
