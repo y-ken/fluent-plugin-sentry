@@ -17,7 +17,12 @@ class SentryOutputTest < Test::Unit::TestCase
   ]
 
   def create_driver(conf=CONFIG,tag='test',use_v1=false)
-    Fluent::Test::BufferedOutputTestDriver.new(Fluent::SentryOutput, tag).configure(conf, use_v1)
+    require 'fluent/version'
+    if Gem::Version.new(Fluent::VERSION) < Gem::Version.new('0.12')
+      Fluent::Test::OutputTestDriver.new(Fluent::SentryOutput, tag).configure(conf, use_v1)
+    else
+      Fluent::Test::BufferedOutputTestDriver.new(Fluent::SentryOutput, tag).configure(conf, use_v1)
+    end
   end
 
   def stub_post(url="https://app.getsentry.com/api/12345/store/")
@@ -60,10 +65,10 @@ class SentryOutputTest < Test::Unit::TestCase
     end
     p @body
     emits = d1.emits
+    timestamp = Time.now.utc.strftime('%Y-%m-%dT%H:%M:%S')
     assert_equal 0, emits.length
     assert_equal 'application/octet-stream', @content_type
     assert_equal emit_message, @body['message']
-    timestamp = Time.now.utc.strftime('%Y-%m-%dT%H:%M:%S')
     assert_equal timestamp, @body['timestamp']
     assert_equal emit_level, @body['level']
     assert_equal 'fluentd', @body['logger']
