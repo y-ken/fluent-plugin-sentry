@@ -16,8 +16,8 @@ class SentryOutputTest < Test::Unit::TestCase
     remove_tag_prefix input.
   ]
 
-  def create_driver(conf=CONFIG,tag='test')
-    Fluent::Test::OutputTestDriver.new(Fluent::SentryOutput, tag).configure(conf)
+  def create_driver(conf=CONFIG,tag='test',use_v1=false)
+    Fluent::Test::BufferedOutputTestDriver.new(Fluent::SentryOutput, tag).configure(conf, use_v1)
   end
 
   def stub_post(url="https://app.getsentry.com/api/12345/store/")
