@@ -22,7 +22,8 @@ Gem::Specification.new do |spec|
   if defined?(RUBY_VERSION) && RUBY_VERSION > '2.2'
     spec.add_development_dependency "test-unit", '~> 3'
   end
-  
+  spec.add_development_dependency "appraisal"
+ 
   spec.add_runtime_dependency "fluentd"
   spec.add_runtime_dependency "sentry-raven", "~> 0.15.0"
 end
