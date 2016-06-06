@@ -23,7 +23,10 @@ Gem::Specification.new do |spec|
     spec.add_development_dependency "test-unit", '~> 3'
   end
   spec.add_development_dependency "appraisal"
- 
-  spec.add_runtime_dependency "fluentd"
+  if defined?(RUBY_VERSION) && RUBY_VERSION < '2'
+    spec.add_runtime_dependency "fluentd", "< 0.14.0"
+  else
+    spec.add_runtime_dependency "fluentd"
+  end
   spec.add_runtime_dependency "sentry-raven", "~> 0.15.0"
 end
