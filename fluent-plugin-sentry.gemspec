@@ -21,8 +21,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "webmock"
   spec.add_development_dependency "test-unit", ">= 3.1.0"
   spec.add_development_dependency "appraisal"
-  if defined?(RUBY_VERSION) && RUBY_VERSION < '2'
-    spec.add_runtime_dependency "fluentd", "< 0.14.0"
+
+  # Since Fluentd v0.14 requires ruby 2.1 or later.
+  if defined?(RUBY_VERSION) && RUBY_VERSION < "2.1"
+    spec.add_runtime_dependency "fluentd", "< 0.14"
   else
     spec.add_runtime_dependency "fluentd"
   end
