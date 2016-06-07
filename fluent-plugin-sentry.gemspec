@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "fluent-plugin-sentry"
-  spec.version       = "0.0.4"
+  spec.version       = "0.0.5"
   spec.authors       = ["Kentaro Yoshida"]
   spec.email         = ["y.ken.studio@gmail.com"]
   spec.summary       = %q{Fluentd output plugin that sends aggregated errors/exception events to Sentry. Sentry is a event logging and aggregation platform.}
