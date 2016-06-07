@@ -17,7 +17,7 @@ fluent-plugin-sentry extends fluent buffered output and enables a fluend user to
 
 ## Installation
 
-install with `gem` or `fluent-gem` command as:
+install with `gem` or td-agent provided command as:
 
 ```bash
 # for fluentd
@@ -25,6 +25,9 @@ $ gem install fluent-plugin-sentry
 
 # for td-agent
 $ sudo /usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-sentry
+
+# for td-agent2
+$ sudo td-agent-gem install fluent-plugin-sentry
 ```
 
 ## Preparation
@@ -41,11 +44,11 @@ OR
 
 ```xml
 <source>
- type forward
+ @type forward
 </source>
 
 <match notify.**>
-  type sentry
+  @type sentry
 
   # Set endpoint API URL
   endpoint_url       https://API_KEY:API_PASSWORD@app.getsentry.com/PROJECT_ID
