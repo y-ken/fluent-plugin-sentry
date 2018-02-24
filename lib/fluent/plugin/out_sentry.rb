@@ -9,13 +9,13 @@ module Fluent
 
     include Fluent::HandleTagNameMixin
 
-    LOG_LEVEL = %w(fatal error warning info debug).to_set()
+    LOG_LEVEL = %w(fatal error warn warning info debug).to_set()
     EVENT_KEYS = %w(message msg timestamp level logger).to_set()
     DEFAULT_HOSTNAME_COMMAND = 'hostname'
 
     config_param :default_level, :string, :default => 'info'
     config_param :default_logger, :string, :default => 'fluentd'
-    config_param :report_levels, :array, value_type: :string, :default => %w(fatal error warning)
+    config_param :report_levels, :array, value_type: :string, :default => %w(fatal error warn warning)
     config_param :tags_key, :array, value_type: :string, :default => %w()
     config_param :endpoint_url, :string
     config_param :flush_interval, :time, :default => 0
