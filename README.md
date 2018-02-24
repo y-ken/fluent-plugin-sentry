@@ -65,20 +65,44 @@ OR
 ## Parameters
 
 * endpoint_url (Required)<br>
-Set endpoint API URL which shows at Sentry dashboard. (it is not sentry account information)
+Set to the sentry DSN, as found in the Sentry dashboard.
 
 * default_level<br>
-[default] error
+[default] info
 
-* defalut_logger<br>
-[default] flunetd
+If a `level` is not present in the log, `default_level` is assumed.
+
+* default_logger<br>
+[default] fluentd
+
+If a `logger` is not present in the log, `default_logger` is assumed.
 
 * hostname_command<br>
 [default] hostname
-Set default frontend value of 'server_name'
+The name of the server reporting the error.
 
 * flush_interval<br>
 [default] 0sec
+
+* report_levels
+[default] fatal error warning
+
+Only report to Sentry logs with `report_levels`.
+
+Note that the default ignores `info` and `debug` logs. And `default_level`
+defaults to `info`. This might ignore more logs than you anticipated.
+
+* tags_key
+[default] ""
+
+Report those items with the given key as tags to Sentry. This makes it possible
+to correlate events via tags. Access to structured tag is supported, for
+example, given the following log:
+
+```
+"{ msg: foo k8s: { app: myapp, container: mycontainer } }
+``` 
+The tag key `k8s.app` will add the tag `k8s.app: myapp` to the Sentry event.
 
 It also support rewriting Tag with SetTagKeyMixin.
 
