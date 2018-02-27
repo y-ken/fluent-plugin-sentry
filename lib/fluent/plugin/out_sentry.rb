@@ -20,6 +20,7 @@ module Fluent
     config_param :endpoint_url, :string
     config_param :flush_interval, :time, :default => 0
     config_param :hostname_command, :string, :default => 'hostname'
+    config_param :stacktrace_expand_json_escaping, :bool, :default => true
 
     def configure(conf)
       super
@@ -94,6 +95,9 @@ module Fluent
 
       stacktrace = record['backtrace'] || record['stacktrace']
       if stacktrace
+        if @stacktrace_expand_json_escaping
+          stacktrace = stacktrace.gsub(/\\[nt]/, '\n' => "\n", '\t' => "\t")
+        end
         event.interface(:stacktrace) do |int|
           int.frames = event.stacktrace_interface_from(stacktrace)
         end

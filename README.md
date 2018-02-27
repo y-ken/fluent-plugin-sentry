@@ -104,6 +104,16 @@ example, given the following log:
 ``` 
 The tag key `k8s.app` will add the tag `k8s.app: myapp` to the Sentry event.
 
+* stacktrace_expand_json_escaping
+[default] true
+
+When going trough some JSON formatter stacktraces `\n` and `\t` characters are
+often escaped. Meaning you will see `\n` instead of a visible line return for
+example and `\t` instead of a visual tabulation.
+
+When true (the default) this option will expand the escaped character into the
+original control code. This important for successfully parsing stacktraces.
+
 It also support rewriting Tag with SetTagKeyMixin.
 
 * remove_tag_prefix
