@@ -76,8 +76,8 @@ module Fluent
     end
 
     def notify_sentry(tag, time, record)
-      level = record['level'] || @default_level
-      if not @report_levels.include?(level.downcase)
+      level = (record['level'] || @default_level).downcase
+      if not @report_levels.include?(level)
         return
       end
 
