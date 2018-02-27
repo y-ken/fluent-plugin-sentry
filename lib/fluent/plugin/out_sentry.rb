@@ -10,7 +10,7 @@ module Fluent
     include Fluent::HandleTagNameMixin
 
     LOG_LEVEL = %w(fatal error warn warning info debug).to_set()
-    EVENT_KEYS = %w(message msg timestamp level logger).to_set()
+    EVENT_KEYS = %w(message msg timestamp level logger stacktrace backtrace).to_set()
     DEFAULT_HOSTNAME_COMMAND = 'hostname'
 
     config_param :default_level, :string, :default => 'info'
@@ -91,8 +91,15 @@ module Fluent
         :logger => record['logger'] || @default_logger,
         :message => record['message'] || record['msg'] || "",
       )
-      event.tags = event.tags
-        .merge(extract_tags(record))
+
+      stacktrace = record['backtrace'] || record['stacktrace']
+      if stacktrace
+        event.interface(:stacktrace) do |int|
+          int.frames = event.stacktrace_interface_from(stacktrace)
+        end
+      end
+
+      event.tags = event.tags.merge(extract_tags(record))
       event.extra = record.reject{ |key| EVENT_KEYS.include?(key) }
       @client.send_event(event)
     end
