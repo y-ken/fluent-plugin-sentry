@@ -81,6 +81,8 @@ module Fluent
         return
       end
 
+      record["fluentd_tag"] = tag
+
       event = Raven::Event.new(
         :configuration => @configuration, 
         :context => @context, 
@@ -90,7 +92,6 @@ module Fluent
         :message => record['message'] || record['msg'] || "",
       )
       event.tags = event.tags
-        .merge({ :fluentd_tag => tag })
         .merge(extract_tags(record))
       event.extra = record.reject{ |key| EVENT_KEYS.include?(key) }
       @client.send_event(event)
