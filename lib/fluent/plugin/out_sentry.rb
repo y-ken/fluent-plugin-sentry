@@ -17,6 +17,7 @@ module Fluent
     config_param :default_logger, :string, :default => 'fluentd'
     config_param :report_levels, :array, value_type: :string, :default => %w(fatal error warn warning)
     config_param :tags_key, :array, value_type: :string, :default => %w()
+    config_param :userid_key, :array, value_type: :string, :default => %w()
     config_param :endpoint_url, :string
     config_param :flush_interval, :time, :default => 0
     config_param :hostname_command, :string, :default => 'hostname'
@@ -41,6 +42,14 @@ module Fluent
       end
 
       @tags_key = @tags_key.to_set()
+
+      @userid_key_patterns = []
+      @userid_key.each do |key_pattern|
+        keys = key_pattern.split("/")
+        @userid_key_patterns.push(keys)
+      end
+
+	  $log.info(@userid_key_patterns)
 
       hostname_command = @hostname_command || DEFAULT_HOSTNAME_COMMAND
       @hostname = `#{hostname_command}`.chomp
@@ -106,6 +115,12 @@ module Fluent
 
       event.tags = event.tags.merge(extract_tags(record))
       event.extra = record.reject{ |key| EVENT_KEYS.include?(key) }
+
+      user_id = extract_userid(record)
+      if user_id != nil
+        event.user = {"id": user_id}
+      end
+
       @client.send_event(event)
     end
 
@@ -122,6 +137,15 @@ module Fluent
         end
       }
       return r
+    end
+
+    def extract_userid(record)
+      @userid_key_patterns.each do |pattern|
+        values = pattern.each.map do |key| record[key] end
+        if values.all?
+          return values.join("/")
+        end
+      end
     end
   end
 end

@@ -93,7 +93,7 @@ Note that the default ignores `info` and `debug` logs. And `default_level`
 defaults to `info`. This might ignore more logs than you anticipated.
 
 * tags_key
-[default] ""
+[default] "" (empty array)
 
 Report those items with the given key as tags to Sentry. This makes it possible
 to correlate events via tags. Access to structured tag is supported, for
@@ -113,6 +113,22 @@ example and `\t` instead of a visual tabulation.
 
 When true (the default) this option will expand the escaped character into the
 original control code. This important for successfully parsing stacktraces.
+
+* userid_key
+[default] "" (empty array)
+
+List of keys to use as for the Sentry user id. Keys are looked up in order a
+log event, first match wins.
+
+Example with `userid_key account, user` and the log
+`{ "msg": "foo", "account": "foo", "user": "babar" }` the Sentry user id will
+be set to "foo".
+
+Composed IDs are supported. Example with
+`userid_key account/user, account, user` and the log as above, the Sentry user
+id will be set to "foo/babar".
+
+Forward slash is used to identify the different keys.
 
 It also support rewriting Tag with SetTagKeyMixin.
 
