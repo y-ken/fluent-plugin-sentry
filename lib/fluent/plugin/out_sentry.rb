@@ -22,6 +22,7 @@ module Fluent
     config_param :flush_interval, :time, :default => 0
     config_param :hostname_command, :string, :default => 'hostname'
     config_param :stacktrace_expand_json_escaping, :bool, :default => true
+    config_param :environment, :enum, list: [:default, :production, :development], :default => :default
 
     def configure(conf)
       super
@@ -48,8 +49,6 @@ module Fluent
         keys = key_pattern.split("/")
         @userid_key_patterns.push(keys)
       end
-
-	  $log.info(@userid_key_patterns)
 
       hostname_command = @hostname_command || DEFAULT_HOSTNAME_COMMAND
       @hostname = `#{hostname_command}`.chomp
@@ -100,6 +99,8 @@ module Fluent
         :level => level,
         :logger => record['logger'] || @default_logger,
         :message => record['message'] || record['msg'] || "",
+        :release => record['release'] || nil,
+        :environment => @environment,
       )
 
       stacktrace = record['stacktrace']
@@ -146,6 +147,7 @@ module Fluent
           return values.join("/")
         end
       end
+      return nil
     end
   end
 end

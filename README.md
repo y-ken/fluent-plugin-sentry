@@ -130,6 +130,14 @@ id will be set to "foo/babar".
 
 Forward slash is used to identify the different keys.
 
+* environment
+[default] "default"
+
+Can be default, production or development. Used to set the environment tag in
+Sentry.
+
+### Tag rewriting
+
 It also support rewriting Tag with SetTagKeyMixin.
 
 * remove_tag_prefix
