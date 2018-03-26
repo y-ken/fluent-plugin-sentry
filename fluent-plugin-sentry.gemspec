@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Kentaro Yoshida", "François-Xavier Bourlet"]
   spec.email         = ["y.ken.studio@gmail.com", "fx.bourlet@rubrik.com"]
   spec.summary       = %q{Fluentd output plugin that sends aggregated errors/exception events to Sentry. Sentry is a event logging and aggregation platform.}
-  spec.homepage      = "https://github.com/bombela/fluent-plugin-sentry"
+  spec.homepage      = "https://github.com/rubrikinc/fluent-plugin-sentry"
   spec.license       = "Apache-2.0"
 
   spec.files         = `git ls-files`.split($/)
