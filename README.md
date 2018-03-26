@@ -1,4 +1,4 @@
-# fluent-plugin-sentry [![Build Status](https://travis-ci.org/y-ken/fluent-plugin-sentry.png?branch=master)](https://travis-ci.org/y-ken/fluent-plugin-sentry)
+# fluent-plugin-sentry [![Build Status](https://travis-ci.org/rubrikinc/fluent-plugin-sentry.png?branch=master)](https://travis-ci.org/rubrikinc/fluent-plugin-sentry)
 
 ## Overview
 
@@ -21,13 +21,13 @@ install with `gem` or td-agent provided command as:
 
 ```bash
 # for fluentd
-$ gem install fluent-plugin-sentry
+$ gem install fluent-plugin-sentry-rubrik
 
 # for td-agent
-$ sudo /usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-sentry
+$ sudo /usr/lib64/fluent/ruby/bin/fluent-gem install fluent-plugin-sentry-rubrik
 
 # for td-agent2
-$ sudo td-agent-gem install fluent-plugin-sentry
+$ sudo td-agent-gem install fluent-plugin-sentry-rubrik
 ```
 
 ## Preparation
