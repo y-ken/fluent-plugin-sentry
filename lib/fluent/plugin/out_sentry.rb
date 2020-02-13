@@ -9,7 +9,7 @@ module Fluent
 
     include Fluent::HandleTagNameMixin
 
-    LOG_LEVEL = %w(fatal error warn warning info debug).to_set()
+    LOG_LEVEL = %w(panic fatal error warn warning info debug).to_set()
     EVENT_KEYS = %w(message msg timestamp level logger).to_set()
     DEFAULT_HOSTNAME_COMMAND = 'hostname'
 
